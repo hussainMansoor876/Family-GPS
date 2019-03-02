@@ -44,7 +44,7 @@ class Home extends React.Component {
             <View style={{flex: 1}}>
             <Header
                 placement="left"
-                leftComponent={{ icon: "<Icon type='font-awesome' name='check' color='#ffffff' />", color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
+                leftComponent={{ icon: 'sync', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
                 centerComponent={{ text: `Reload`, style: { color: '#fff' } }}
                 rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
               />
