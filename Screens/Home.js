@@ -26,6 +26,16 @@ class Home extends React.Component {
     }
   }
 
+  async checkGPS(){
+    const check = await Location.getProviderStatusAsync()
+    console.log('check',check.gpsAvailable)
+    if(!check.gpsAvailable){
+      this.props.gpsChcek(false)
+    }else{
+      this.props.gpsChcek(check.gpsAvailable)
+    }
+  }
+
   render() {
     const { user, enable } = this.props
     console.log('en',enable)
@@ -44,7 +54,7 @@ class Home extends React.Component {
             <View style={{flex: 1}}>
             <Header
                 placement="left"
-                leftComponent={{ icon: 'sync', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
+                leftComponent={{ icon: 'sync', color: '#fff', onPress: ()=> this.checkGPS() }}
                 centerComponent={{ text: `Reload`, style: { color: '#fff' } }}
                 rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
               />
