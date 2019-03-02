@@ -32,10 +32,18 @@ const chatUser = (chats) =>{
     }
 }
 
+const updateLocation = (location) =>{
+    return {
+        type: "LOCATION",
+        location
+    }
+}
+
 export {
     updateUser,
     gpsChcek,
     removeUser,
     allUser,
-    chatUser
+    chatUser,
+    updateLocation
 }

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Platform, Alert, ScrollView, Picker } from 'rea
 import { DrawerActions } from 'react-navigation-drawer';
 import { Header, Button, Input, Card, Image, Icon, Overlay, Rating, AirbnbRating } from 'react-native-elements';
 import { Constants, Location, Permissions } from 'expo';
-import { updateUser, removeUser, allUser, chatUser, gpsChcek } from '../Redux/actions/authActions'
+import { updateUser, removeUser, allUser, chatUser, gpsChcek, updateLocation } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -23,6 +23,10 @@ class Home extends React.Component {
       this.props.gpsChcek(false)
     }else{
       this.props.gpsChcek(check.gpsAvailable)
+      let location = await Location.getCurrentPositionAsync({});
+      console.log('loc',location)
+      this.setState({ lat: location.coords.latitude, lng: location.coords.longitude });
+      this.props.updateLocation({ lat: location.coords.latitude, lng: location.coords.longitude })
     }
   }
 
@@ -87,7 +91,8 @@ const styles = StyleSheet.create({
       user: state.authReducer.user,
       userList: state.authReducer.userList,
       chats: state.authReducer.chats,
-      enable: state.authReducer.enable
+      enable: state.authReducer.enable,
+      location: state.authReducer.location
     }
   }
   
@@ -97,7 +102,8 @@ const styles = StyleSheet.create({
       allUser: (userList) => dispatch(allUser(userList)),
       removeUser: () => dispatch(removeUser()),
       chatUser: (chats) => dispatch(chatUser(chats)),
-      gpsChcek: (enable) => dispatch(gpsChcek(enable))
+      gpsChcek: (enable) => dispatch(gpsChcek(enable)),
+      updateLocation: (location) => dispatch(updateLocation(location))
     }
   }
   

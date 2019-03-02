@@ -15,6 +15,9 @@ const reducer = (state = {}, action) =>{
         case "REMOVE_USER": {
             return {...state, user: null, chats: null, userList: null}
         }
+        case "LOCATION": {
+            return {...state, lat: action.location.lat, lng: action.location.lng}
+        }
         default: {
             return state;
         }
