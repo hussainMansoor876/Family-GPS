@@ -86,8 +86,15 @@ class Login extends React.Component {
             .then(userCredential => {
               console.log('user',userCredential.user.toJSON())
               const user = userCredential.user.toJSON()
-              if(parseInt(user.lastLoginAt) - parseInt(user.createdAt) < 10){
+              var obj = {
+                
+              }
+              if(parseInt(user.lastLoginAt) - parseInt(user.createdAt) < 5){
                 console.log("hello")
+                this.props.newUser(true)
+              }
+              else{
+
               }
               // setTimeout(() => {
               //   this.props.navigation.navigate("Main");
