@@ -82,6 +82,7 @@ class Login extends React.Component {
                 photoURL: user.photoURL,
                 uid: user.uid
               }
+              this.props.updateUser(obj)
               // setTimeout(() => {
               //   this.props.navigation.navigate("Main");
               //   this.setState({ loader: true });
@@ -103,6 +104,7 @@ class Login extends React.Component {
     const { user } = this.props
     return (
       <View style={styles.container}>
+      {/* {user ? <Navigator/> :
         <View>
         <View style={{marginTop: 5, marginBottom: 70, marginLeft: 1, marginRight: 1}}>
         <Button
@@ -118,9 +120,10 @@ class Login extends React.Component {
           onPress={()=> this.logIn()}
           title="Login with Facebook"
           />
-        </View>
-          <Text>Wellcome to Mansoor Hussain Service App</Text>
           </View>
+          <Text>Wellcome to Mansoor Hussain Family-GPS</Text>
+          </View>} */}
+          <Navigator />
       </View>
     );
   }
