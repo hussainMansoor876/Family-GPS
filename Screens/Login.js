@@ -3,7 +3,7 @@ import { StyleSheet, View, Alert, TextInput,Text, Image, Keyboard, Platform } fr
 import { Facebook, Google, ImagePicker, Constants, Location, Permissions } from 'expo'
 import { Button, Header, Input, FormLabel, FormInput } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { updateUser, newUser } from '../Redux/actions/authActions'
+import { updateUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux'
 import axios from 'axios';
 import Navigator from '../navigation/AppNavigator'
@@ -25,7 +25,6 @@ class Login extends React.Component {
   }
 
   componentDidMount(){
-    this.props.newUser(false)
     // navigator.geolocation.getCurrentPosition(position => {
     //   this.setState({
     //     lat : position.coords.latitude,
@@ -143,14 +142,12 @@ const mapStateToProps = (state) => {
   console.log("mapToState",state.authReducer)
   return {
     user: state.authReducer.user,
-    new: state.authReducer.new
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch(updateUser(user)),
-    newUser: (bool) => dispatch(newUser(bool))
   }
 }
 

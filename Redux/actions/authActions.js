@@ -5,10 +5,10 @@ const updateUser = (user) => {
     }
 }
 
-const newUser = (bool) => {
+const gpsChcek = (bool) => {
     return {
-        type: "NEW_USER",
-        new: bool
+        type: "GPS",
+        enable: bool
     }
 }
 
@@ -34,7 +34,7 @@ const chatUser = (chats) =>{
 
 export {
     updateUser,
-    newUser,
+    gpsChcek,
     removeUser,
     allUser,
     chatUser
