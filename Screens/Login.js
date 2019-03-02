@@ -103,10 +103,6 @@ class Login extends React.Component {
     const { user } = this.props
     return (
       <View style={styles.container}>
-      { user && !this.props.new ? <Navigator />
-       :
-      <View>
-        {!user && !this.props.new &&
         <View>
         <View style={{marginTop: 5, marginBottom: 70, marginLeft: 1, marginRight: 1}}>
         <Button
@@ -124,8 +120,7 @@ class Login extends React.Component {
           />
         </View>
           <Text>Wellcome to Mansoor Hussain Service App</Text>
-          </View>}
-      </View>}
+          </View>
       </View>
     );
   }
