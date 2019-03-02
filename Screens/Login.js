@@ -31,36 +31,6 @@ class Login extends React.Component {
       phoneCheck: false,
       lat: '',
       lng: '',
-      services: [
-        {
-          name: 'electrication',
-          type: false
-        },
-        {
-          name: 'mechanic',
-          type: false
-        },
-        {
-          name: 'plumber',
-          type: false
-        },
-        {
-          name: 'bike mechanic',
-          type: false
-        },
-        {
-          name: 'car mechanic',
-          type: false
-        },
-        {
-          name: 'motor mechanic',
-          type: false
-        },
-        {
-          name: 'machine',
-          type: false
-        }
-      ]
     }
   }
 
@@ -110,25 +80,20 @@ class Login extends React.Component {
         } = await Facebook.logInWithReadPermissionsAsync('787190688316212', {
           permissions: ['groups_access_member_info'],
         });
-        if (type === 'success') {
-          // Get the user's name using Facebook's Graph API
-          const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-          const user = await response.json()
-          axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
-          .then((response) => {
-            const { data } = response
-            if(!data.length){
-              this.props.newUser(true)
-              this.props.updateUser(user)
-            }
-            else{
-              this.props.updateUser(user)
-            }
-          })
-          .catch(function (error) {
-            console.log('error',error);
-          });             
+        if (type === "success") {
+          const credential = firebase.auth.FacebookAuthProvider.credential(token);
+          firebase.auth().signInAndRetrieveDataWithCredential(credential)
+            .then(userCredential => {
+              // this.props.updateUser();
+              // console.log(userCredential.user, "****userCredential****");
+              setTimeout(() => {
+                this.props.navigation.navigate("Main");
+                this.setState({ loader: true });
+              }, 2000);
+              this.setState({ loader: false });
+            });
         } else {
+          console.log("type === cancel");
           // type === 'cancel'
         }
       } catch ({ message }) {
@@ -206,30 +171,6 @@ class Login extends React.Component {
         }
       }
 
-      async submit(){
-        const { phone, image, imageName, avator, lat, lng, services } = this.state
-        const { user } = this.props
-        // console.log('state',this.state)
-            axios.post('https://final-hackathon.herokuapp.com/user/post', {
-              name: user.name,
-              email: user.email,
-              id: user.id,
-              avator: avator,
-              phone: phone,
-              lat: lat,
-              lng: lng,
-              services: services
-            })
-            .then((response) => {
-              this.props.newUser(false)
-              this.props.updateUser(user)
-              Alert.alert(response.data.message);
-            })
-            .catch((error) => {
-              Alert.alert(error);
-            });
-      }
-      
 
   render() {
     // console.log('this',this.state)
@@ -242,19 +183,6 @@ class Login extends React.Component {
       <View>
         {!user && !this.props.new &&
         <View>
-        <View style={{marginTop: 150, marginBottom: 2, marginLeft: 1, marginRight: 1}}>
-        <Button
-          icon={
-            <Icon
-            name="google"
-            size={25}
-            color="white"
-            />
-          }
-          onPress = {() => this.googleLogin()}
-          title="Login with Google"
-          />
-        </View>
         <View style={{marginTop: 5, marginBottom: 70, marginLeft: 1, marginRight: 1}}>
         <Button
           icon={
