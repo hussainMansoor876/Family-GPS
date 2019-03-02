@@ -60,53 +60,57 @@ class Login extends React.Component {
   };
 
   async logIn(){
-      try {
-        const {
-          type,
-          token,
-          expires,
-          permissions,
-          declinedPermissions,
-        } = await Facebook.logInWithReadPermissionsAsync('2293122350709508', {
-          permissions: ['public_profile','email'],
-        });
-        if (type === "success") {
-          const credential = firebase.auth.FacebookAuthProvider.credential(token);
-          firebase.auth().signInAndRetrieveDataWithCredential(credential)
-            .then(userCredential => {
-              console.log('user',userCredential.user.toJSON())
-              const user = userCredential.user.toJSON()
-              var obj = {
-                email: user.email,
-                name: user.displayName,
-                photoURL: user.photoURL,
-                uid: user.uid
-              }
-              this.props.updateUser(obj)
-              // setTimeout(() => {
-              //   this.props.navigation.navigate("Main");
-              //   this.setState({ loader: true });
-              // }, 2000);
-              // this.setState({ loader: false });
-            });
-        } else {
-          console.log("type === cancel");
-          // type === 'cancel'
-        }
-      } catch ({ message }) {
-        alert(`Facebook Login Error: ${message}`);
+    try {
+      const {
+        type,
+        token,
+        expires,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync('2293122350709508', {
+        permissions: ['public_profile','email'],
+      });
+      if (type === "success") {
+        const credential = firebase.auth.FacebookAuthProvider.credential(token);
+        firebase.auth().signInAndRetrieveDataWithCredential(credential)
+          .then(userCredential => {
+            console.log('user',userCredential.user.toJSON())
+            const user = userCredential.user.toJSON()
+            var obj = {
+              email: user.email,
+              name: user.displayName,
+              photoURL: user.photoURL,
+              uid: user.uid
+            }
+            firebase.database().ref('users').child(obj.uid).set(obj)
+            this.props.updateUser(obj)
+            // setTimeout(() => {
+            //   this.props.navigation.navigate("Main");
+            //   this.setState({ loader: true });
+            // }, 2000);
+            // this.setState({ loader: false });
+          });
+      } else {
+        console.log("type === cancel");
+        // type === 'cancel'
       }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
     }
+  }
 
+     
 
+      
 
   render() {
     const { user } = this.props
     return (
       <View style={styles.container}>
-      {/* {user ? <Navigator/> :
-        <View>
-        <View style={{marginTop: 5, marginBottom: 70, marginLeft: 1, marginRight: 1}}>
+      { user  ? <Navigator />
+       :
+        <View style={{marginTop: 150, marginBottom: 2, marginLeft: 1, marginRight: 1,  alignItems: 'center',
+    justifyContent: 'center',}}>
         <Button
           icon={
             <Icon
@@ -120,10 +124,8 @@ class Login extends React.Component {
           onPress={()=> this.logIn()}
           title="Login with Facebook"
           />
-          </View>
-          <Text>Wellcome to Mansoor Hussain Family-GPS</Text>
-          </View>} */}
-          <Navigator />
+          <Text>Wellcome to Mansoor Hussain Service App</Text>
+      </View>}
       </View>
     );
   }
@@ -133,8 +135,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   }
 });
 
