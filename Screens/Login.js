@@ -85,6 +85,10 @@ class Login extends React.Component {
           firebase.auth().signInAndRetrieveDataWithCredential(credential)
             .then(userCredential => {
               console.log('user',userCredential.user.toJSON())
+              const user = userCredential.user.toJSON()
+              if(parseInt(user.lastLoginAt) - parseInt(user.createdAt) < 10){
+                console.log("hello")
+              }
               // setTimeout(() => {
               //   this.props.navigation.navigate("Main");
               //   this.setState({ loader: true });
