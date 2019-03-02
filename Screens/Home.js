@@ -21,6 +21,8 @@ class Home extends React.Component {
     console.log('check',check.gpsAvailable)
     if(!check.gpsAvailable){
       this.props.gpsChcek(false)
+    }else{
+      this.props.gpsChcek(check.gpsAvailable)
     }
   }
 
@@ -30,20 +32,20 @@ class Home extends React.Component {
     const { allServices, active, activeIndex } = this.state
     return (
         <View style={styles.container}>
-        {enable ? <View style={{flex: 1}}>
+        {enable && <View style={{flex: 1}}>
         <Header
             placement="left"
             leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
             centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
             rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
           />
-          </View> :
-          <View style={{flex: 1}}>
+          </View>}
+          {!enable && <View style={{flex: 1}}>
             <View style={{flex: 1}}>
             <Header
                 placement="left"
-                leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
-                centerComponent={{ text: `Wellcome`, style: { color: '#fff' } }}
+                leftComponent={{ icon: "<Icon type='font-awesome' name='check' color='#ffffff' />", color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
+                centerComponent={{ text: `Reload`, style: { color: '#fff' } }}
                 rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
               />
             </View>
