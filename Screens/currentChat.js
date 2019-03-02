@@ -1,9 +1,6 @@
 import React from 'react'
 import { Platform, ScrollView, View, StyleSheet, KeyboardAvoidingView } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
-import dismissKeyboard from 'react-native-dismiss-keyboard';
 import { Header, Button, Input, Card, Image, Icon, Text } from 'react-native-elements';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { DrawerActions } from 'react-navigation-drawer';
 import { updateUser, removeUser, allUser, chatUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';

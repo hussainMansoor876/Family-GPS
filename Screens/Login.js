@@ -77,15 +77,13 @@ class Login extends React.Component {
           expires,
           permissions,
           declinedPermissions,
-        } = await Facebook.logInWithReadPermissionsAsync('787190688316212', {
-          permissions: ['groups_access_member_info'],
+        } = await Facebook.logInWithReadPermissionsAsync('2293122350709508', {
+          permissions: ['public_profile','email'],
         });
         if (type === "success") {
           const credential = firebase.auth.FacebookAuthProvider.credential(token);
           firebase.auth().signInAndRetrieveDataWithCredential(credential)
             .then(userCredential => {
-              // this.props.updateUser();
-              // console.log(userCredential.user, "****userCredential****");
               setTimeout(() => {
                 this.props.navigation.navigate("Main");
                 this.setState({ loader: true });
@@ -101,28 +99,6 @@ class Login extends React.Component {
       }
     }
 
-     
-
-      async googleLogin(){
-        const clientId  = '777635686273-80tsm7h4k70oue449p34ontp0o86q1e5.apps.googleusercontent.com'
-        const { type, accessToken, user } = await Google.logInAsync({ clientId })
-        if (type === 'success') {
-          axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
-          .then((response) => {
-            const { data } = response
-            if(!data.length){
-              this.props.newUser(true)
-              this.props.updateUser(user)
-            }
-            else{
-              this.props.updateUser(user)
-            }
-          })
-          .catch(function (error) {
-            console.log('error',error);
-          });
-        }
-      }
 
       async pickImage(){
         const { user } = this.props
@@ -173,7 +149,6 @@ class Login extends React.Component {
 
 
   render() {
-    // console.log('this',this.state)
     const { user } = this.props
     const { imageName, image, phone, new1, phoneCheck } = this.state
     return (
