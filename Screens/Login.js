@@ -84,11 +84,12 @@ class Login extends React.Component {
           const credential = firebase.auth.FacebookAuthProvider.credential(token);
           firebase.auth().signInAndRetrieveDataWithCredential(credential)
             .then(userCredential => {
-              setTimeout(() => {
-                this.props.navigation.navigate("Main");
-                this.setState({ loader: true });
-              }, 2000);
-              this.setState({ loader: false });
+              console.log('user',userCredential.user.toJSON())
+              // setTimeout(() => {
+              //   this.props.navigation.navigate("Main");
+              //   this.setState({ loader: true });
+              // }, 2000);
+              // this.setState({ loader: false });
             });
         } else {
           console.log("type === cancel");
@@ -212,8 +213,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 
