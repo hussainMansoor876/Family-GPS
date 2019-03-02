@@ -23,31 +23,7 @@ export default class Map extends React.Component {
           lng: props.locationsList[1].location['lng'],
           title: props.locationsList[1].name,
           description: props.locationsList[1].location['address']
-        },
-        third: {
-          lat: props.locationsList[2].location['lat'],
-          lng: props.locationsList[2].location['lng'],
-          title: props.locationsList[2].name,
-          description: props.locationsList[2].location['address']
-        },
-        fourth: {
-          lat: props.locationsList[3].location['lat'],
-          lng: props.locationsList[3].location['lng'],
-          title: props.locationsList[3].name,
-          description: props.locationsList[3].location['address']
-        },
-        fifth: {
-          lat: props.locationsList[4].location['lat'],
-          lng: props.locationsList[4].location['lng'],
-          title: props.locationsList[4].name,
-          description: props.locationsList[4].location['address']
-        },
-        sixth: {
-          lat: props.locationsList[5].location['lat'],
-          lng: props.locationsList[5].location['lng'],
-          title: props.locationsList[5].name,
-          description: props.locationsList[5].location['address']
-        },
+        }
       }
     }
   }
@@ -63,16 +39,16 @@ export default class Map extends React.Component {
         <MapView
         style={{ flex: 1 }}
         region={{
-          latitude: locationsList[4].location['lat'],
-          longitude: locationsList[4].location['lng'],
+          latitude: locationsList[0].location['lat'],
+          longitude: locationsList[0].location['lng'],
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
       >
       <Marker
-      coordinate={{latitude: marker.fifth.lat,longitude: marker.fifth.lng}}
-      title={marker.fifth.title}
-      description= {marker.fifth.description}
+      coordinate={{latitude: marker.first.lat,longitude: marker.first.lng}}
+      title={marker.first.title}
+      description= {marker.first.description}
     />
       </MapView>
       <Button
@@ -83,16 +59,16 @@ export default class Map extends React.Component {
       <MapView
         style={{ flex: 1 }}
         region={{
-          latitude: locationsList[5].location['lat'],
-          longitude: locationsList[5].location['lng'],
+          latitude: locationsList[1].location['lat'],
+          longitude: locationsList[1].location['lng'],
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
       >
       <Marker
-      coordinate={{latitude: marker.sixth.lat,longitude: marker.sixth.lng}}
-      title={marker.sixth.title}
-      description= {marker.sixth.description}
+      coordinate={{latitude: marker.second.lat,longitude: marker.second.lng}}
+      title={marker.second.title}
+      description= {marker.second.description}
     />
       </MapView>
       <Button
