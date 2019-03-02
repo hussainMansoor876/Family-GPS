@@ -21,16 +21,6 @@ class Login extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      imageName: null,
-      image: null,
-      phone: '',
-      new1: props.new,
-      user: props.user,
-      avator: '',
-      errorMessage: '',
-      phoneCheck: false,
-      lat: '',
-      lng: '',
     }
   }
 
@@ -87,14 +77,10 @@ class Login extends React.Component {
               console.log('user',userCredential.user.toJSON())
               const user = userCredential.user.toJSON()
               var obj = {
-                
-              }
-              if(parseInt(user.lastLoginAt) - parseInt(user.createdAt) < 5){
-                console.log("hello")
-                this.props.newUser(true)
-              }
-              else{
-
+                email: user.email,
+                name: user.displayName,
+                photoURL: user.photoURL,
+                uid: user.uid
               }
               // setTimeout(() => {
               //   this.props.navigation.navigate("Main");
@@ -112,57 +98,9 @@ class Login extends React.Component {
     }
 
 
-      async pickImage(){
-        const { user } = this.props
-        let result = await ImagePicker.launchImageLibraryAsync({
-          allowsEditing: true,
-          aspect: [5, 6],
-        })
-    
-        if (!result.cancelled) {
-          this.uploadImage(result.uri,"mansoor")
-            .then((res) => {
-              this.setState({ image: res, imageName: result.uri });
-            })
-            .catch(error => {
-              console.log("Error==>",error)
-            })
-        }
-      };
-      
-
-      uploadImage = async (uri,imageName) => {
-        const { user } = this.props
-        const blob = await new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          xhr.onload = function() {
-            resolve(xhr.response);
-          };
-          xhr.onerror = function(e) {
-            console.log(e);
-            reject(new TypeError('Network request failed'));
-          };
-          xhr.responseType = 'blob';
-          xhr.open('GET', uri, true);
-          xhr.send(null);
-        })
-        const storageRef = firebase.storage().ref(`${user.id}/${uri}`);
-        const snapShot = await storageRef.put(blob)
-        const remoteUri = await snapShot.ref.getDownloadURL()
-        this.setState({avator: remoteUri})
-        return await blob;
-      }
-
-      phoneNumber(text){
-        if(text >= 0){
-          this.setState({phone: text, phoneCheck: true})
-        }
-      }
-
 
   render() {
     const { user } = this.props
-    const { imageName, image, phone, new1, phoneCheck } = this.state
     return (
       <View style={styles.container}>
       { user && !this.props.new ? <Navigator />
@@ -186,33 +124,6 @@ class Login extends React.Component {
           />
         </View>
           <Text>Wellcome to Mansoor Hussain Service App</Text>
-          </View>}
-      </View>}
-      {this.props.new && user && <View style={{marginTop: 80}}>      
-      <View style={{marginBottom: 20}}>
-      <Input
-        placeholder='INPUT your phone number'
-        leftIcon={
-          <Icon
-            name='phone-square'
-            size={24}
-            color='black'
-          />
-        }
-        value={phone}
-        onChangeText = {(text) => this.phoneNumber(text)}
-      />
-      </View>
-      <Button
-            title={!imageName ? "Pick Image" : imageName.slice(imageName.length - 20,imageName.length)}
-            onPress={() => this.pickImage()}
-          />
-      {imageName && phoneCheck && 
-      <View style={{marginTop: 10}}>
-          <Button
-            title="Submit"
-            onPress={() => this.submit()}
-          />
           </View>}
       </View>}
       </View>
