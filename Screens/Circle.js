@@ -15,6 +15,7 @@ class Circle extends React.Component {
     super(props);
     this.state = {
       create: false,
+      group: false,
       circleData: []
     }
     this.createCircle = this.createCircle.bind(this)
@@ -59,9 +60,7 @@ class Circle extends React.Component {
 
   render() {
     const { user } = this.props
-    const { circleData } = this.state
-    const { create } = this.state
-    // console.log('circleData',circleData)    
+    const { circleData, create, group } = this.state
     return (
         <View style={styles.container}>
         {!create ? 
@@ -73,7 +72,7 @@ class Circle extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <ScrollView style={{marginTop: 5}}>
-        {circleData.length && circleData.map((v,i) => {
+        {circleData.length && !group && circleData.map((v,i) => {
           return <ListItem
           key={i}
           Component={TouchableScale}
@@ -96,6 +95,7 @@ class Circle extends React.Component {
           onPress={() => this.showMap(v)}
         />;
         })}
+        {/* {group && } */}
         <Button
             icon={<Icon type='font-awesome' name='users' color='#ffffff' />}
             backgroundColor='#03A9F4'
