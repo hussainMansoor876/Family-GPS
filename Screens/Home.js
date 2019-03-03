@@ -6,6 +6,7 @@ import { Constants, Location, Permissions } from 'expo';
 import { updateUser, removeUser, allUser, chatUser, gpsChcek, updateLocation } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
 import axios from 'axios';
+import firebase from '../Config/firebase'
 
 
 class Home extends React.Component {
@@ -24,19 +25,28 @@ class Home extends React.Component {
     }else{
       this.props.gpsChcek(check.gpsAvailable)
       let location = await Location.getCurrentPositionAsync({});
-      console.log('loc',location)
       this.setState({ lat: location.coords.latitude, lng: location.coords.longitude });
       this.props.updateLocation({ lat: location.coords.latitude, lng: location.coords.longitude })
+      user['lat'] = location.coords.latitude
+      user['lng'] = location.coords.longitude
+      firebase.database().ref('users').child(user.uid).set(user)
     }
   }
 
   async checkGPS(){
+    const { user } = this.props
     const check = await Location.getProviderStatusAsync()
     console.log('check',check.gpsAvailable)
     if(!check.gpsAvailable){
       this.props.gpsChcek(false)
     }else{
       this.props.gpsChcek(check.gpsAvailable)
+      let location = await Location.getCurrentPositionAsync({});
+      this.setState({ lat: location.coords.latitude, lng: location.coords.longitude });
+      this.props.updateLocation({ lat: location.coords.latitude, lng: location.coords.longitude })
+      user['lat'] = location.coords.latitude
+      user['lng'] = location.coords.longitude
+      firebase.database().ref('users').child(user.uid).set(user)
     }
   }
 
