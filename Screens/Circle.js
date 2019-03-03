@@ -6,23 +6,36 @@ import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import firebase from './../Config/firebase';
+import CreateCircle from './CreateCircle';
 
 class Circle extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      create: false
     }
+    this.createCircle = this.createCircle.bind(this)
   }
 
   componentWillMount(){
-    const { user } = this.props
+    let { user } = this.props
     firebase.database().ref('users').child(user.uid).on('value',(value)=>{
       console.log('value',value.val())
+      user = value.val()
     })
   }
 
+  createCircle(){
+    this.setState({create: true})
+  }
+
+
   render() {
+    const { user } = this.props
+    const { create } = this.state
     return (
+        <View style={styles.container}>
+        {!create ? 
         <View style={styles.container}>
         <Header
         placement="left"
@@ -31,14 +44,16 @@ class Circle extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <ScrollView style={{marginTop: 5}}>
-        
+        {user['circle'] && console.log(user['circle'])}
         <Button
             icon={<Icon type='font-awesome' name='comments' color='#ffffff' />}
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green', marginTop: 10}}
-            onPress={() => this.setState({type: 'rec'})}
+            onPress={() => this.setState({create: true})}
             title='CREATE CIRCLE' />
         </ScrollView>
+        </View>
+         : <CreateCircle create={this.createCircle} />}
       </View>
     );
   }

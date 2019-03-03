@@ -6,9 +6,6 @@ const DrawerNavigator = createDrawerNavigator({
     Home: {
         screen: Screen.HomeScreen
     },
-    'Create Circle': {
-        screen: Screen.CreateCircle
-    },
     Circle: {
         screen: Screen.Circle
     }

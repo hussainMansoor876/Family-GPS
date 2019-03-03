@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
-import { Header, Button, CheckBox, Icon, ListItem } from 'react-native-elements';
+import { Header, Button, CheckBox, Icon, ListItem, Input } from 'react-native-elements';
 import { updateUser, removeUser, allUser, chatUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
@@ -11,6 +11,7 @@ class CreateCircle extends React.Component {
     super(props);
     this.state = {
     }
+    console.log('props',props)
   }
 
   componentWillMount(){
@@ -22,9 +23,40 @@ class CreateCircle extends React.Component {
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
-        centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
+        centerComponent={{ text: `Wellcome`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
+        <Input
+          placeholder='BASIC INPUT'
+        />
+
+        <Input
+          placeholder='INPUT WITH ICON'
+          leftIcon={{ type: 'font-awesome', name: 'chevron-left' }}
+        />
+
+        <Input
+          placeholder='INPUT WITH CUSTOM ICON'
+          leftIcon={
+            <Icon
+              name='user'
+              size={24}
+              color='black'
+            />
+          }
+        />
+
+        <Input
+          placeholder='INPUT WITH SHAKING EFFECT'
+          shake={true}
+        />
+
+        <Input
+          placeholder='INPUT WITH ERROR MESSAGE'
+          errorStyle={{ color: 'red' }}
+          errorMessage='ENTER A VALID ERROR HERE'
+        />
+
       </ScrollView>
     );
   }
