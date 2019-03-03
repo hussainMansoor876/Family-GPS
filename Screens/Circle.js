@@ -100,7 +100,8 @@ class Circle extends React.Component {
       }
       firebase.database().ref('users').child(`${v.uid}/notifications`).push(obj)
     })
-    Alert.
+    Alert.alert(`The Invitation of ${openCircle} has been Successfully send to ${v.name}`)
+    this.setState({invite: false})
   }
 
 
