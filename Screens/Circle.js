@@ -90,10 +90,17 @@ class Circle extends React.Component {
   inviteUser(v){
     const { openCircle } = this.state
     const { user } = this.props
+    var obj
     console.log('v',v)
     firebase.database().ref('circles').child(`${user.uid}/${openCircle}`).on('value',(value) => {
       console.log('console',value.val())
+      obj = {
+        secretId: value.val(),
+        message: `${user.name} invited you to Join circle Group (${openCircle}) and invited code is ${value.val()}`
+      }
+      firebase.database().ref('users').child(`${v.uid}/notifications`).push(obj)
     })
+    Alert.
   }
 
 
