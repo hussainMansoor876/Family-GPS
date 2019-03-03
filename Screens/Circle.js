@@ -18,7 +18,9 @@ class Circle extends React.Component {
       group: false,
       openCircle: '',
       circleData: [],
-      data: []
+      data: [],
+      inviteList: [],
+      invite: false
     }
     this.createCircle = this.createCircle.bind(this)
   }
@@ -72,13 +74,23 @@ class Circle extends React.Component {
   }
 
   inviteFriends(){
-    console.log('this',this.state.data)
+    const { data, inviteList } = this.state
+    const { userList } = this.props
+    console.log('user',data)
+    console.log('all',userList)
+    data.map((v,i) => {
+      return userList.map((val,key) => {
+        val.uid !== v.uid && inviteList.push(val)
+      })
+    })
+    console.log('inviteList',inviteList)
+    this.setState({invite: true})
   }
 
 
   render() {
     const { user } = this.props
-    const { circleData, create, group, data, openCircle } = this.state
+    const { circleData, create, group, data, openCircle, invite, inviteList } = this.state
     // console.log('circleData',circleData)    
     return (
         <View style={styles.container}>
@@ -119,7 +131,7 @@ class Circle extends React.Component {
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green', marginTop: 10}}
             onPress={() => this.setState({create: true})}
-            title='CREATE CIRCLE' /> : <ScrollView style={{flex: 1}}>
+            title='CREATE CIRCLE' /> : !invite ? <ScrollView style={{flex: 1}}>
               {data.map((v,i) => {
                 return <ListItem
                 key={i}
@@ -140,7 +152,7 @@ class Circle extends React.Component {
                 chevronColor="white"
                 chevron
                 containerStyle={{margin: 1}}
-                onPress={() => this.showMap(v)}
+                onPress={() => Alert.alert(`${v.name} Here!!!`)}
               />
               })}
               <Button
@@ -155,7 +167,29 @@ class Circle extends React.Component {
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green', marginTop: 10}}
             onPress={() => this.setState({create: true})}
             title='View Circle Map' />
-            </ScrollView>}
+            </ScrollView> : <View style={{flex: 1}}>
+          {
+            inviteList.map((l, i) => (
+              <View key={i} style={{flex: 1}}>
+              <ListItem
+                leftAvatar={{ source: { uri: l.photoURL } }}
+                title={l.name}
+                subtitle={l.email ? l.email : null}
+              />
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{flex: 1, margin: 0.5}}>
+                <Button
+                    icon={<Icon type='font-awesome' name='user-plus' color='#ffffff' />}
+                    backgroundColor='#03A9F4'
+                    buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                    onPress={() => this.setState({invite: false})}
+                    title={`Invite ${l.name}`} />
+                    </View>
+                </View>
+              </View>
+            ))
+          }
+        </View>}
         </ScrollView>
         </View>
          : <CreateCircle create={this.createCircle} />}
@@ -174,13 +208,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    user: state.authReducer.user
+    user: state.authReducer.user,
+    userList: state.authReducer.userList
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch(updateUser(user)),
+    allUser: (userList) => dispatch(allUser(userList)),
     removeUser: () => dispatch(removeUser())
   }
 }
