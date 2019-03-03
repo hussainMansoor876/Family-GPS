@@ -7,6 +7,7 @@ import { updateUser, removeUser, allUser, chatUser, gpsChcek, updateLocation } f
 import { connect } from 'react-redux';
 import axios from 'axios';
 import firebase from '../Config/firebase'
+import Map from './Map'
 
 
 class Home extends React.Component {
@@ -52,7 +53,6 @@ class Home extends React.Component {
 
   render() {
     const { user, enable } = this.props
-    console.log('en',enable)
     const { allServices, active, activeIndex } = this.state
     return (
         <View style={styles.container}>
@@ -63,6 +63,7 @@ class Home extends React.Component {
             centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
             rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
           />
+          <Map />
           </View>}
           {!enable && <View style={{flex: 1}}>
             <View style={{flex: 1}}>
