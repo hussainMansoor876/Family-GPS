@@ -87,7 +87,7 @@ class Circle extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <ScrollView style={{marginTop: 5}}>
-        {circleData.length && circleData.map((v,i) => {
+        {circleData.length && !group && circleData.map((v,i) => {
           return <ListItem
           key={i}
           Component={TouchableScale}
@@ -132,7 +132,7 @@ class Circle extends React.Component {
                 title={v.name}
                 titleStyle={{ color: 'white', fontWeight: 'bold' }}
                 subtitleStyle={{ color: 'white' }}
-                subtitle={v.users[user.uid] == 'Admin' ? 'You are Admin' : 'You are User'}
+                subtitle={v.email ? v.email : null}
                 chevronColor="white"
                 chevron
                 containerStyle={{margin: 1}}
