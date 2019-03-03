@@ -71,6 +71,10 @@ class Circle extends React.Component {
     })
   }
 
+  inviteFriends(){
+    console.log('this',this.state.data)
+  }
+
 
   render() {
     const { user } = this.props
@@ -128,7 +132,7 @@ class Circle extends React.Component {
                   start: [1, 0],
                   end: [0.2, 0]
                 }}
-                // leftAvatar={{ rounded: true, source: { uri: avatar_url } }}
+                leftAvatar={{ rounded: true, source: { uri: v.photoURL } }}
                 title={v.name}
                 titleStyle={{ color: 'white', fontWeight: 'bold' }}
                 subtitleStyle={{ color: 'white' }}
@@ -143,7 +147,7 @@ class Circle extends React.Component {
             icon={<Icon type='font-awesome' name='user-plus' color='#ffffff' />}
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green', marginTop: 10}}
-            onPress={() => this.setState({create: true})}
+            onPress={() => this.inviteFriends()}
             title='Invite friends' />
             <Button
             icon={<Icon type='font-awesome' name='map-marker' color='#ffffff' />}
