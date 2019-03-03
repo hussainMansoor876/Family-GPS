@@ -32,7 +32,12 @@ class CreateCircle extends React.Component {
   createGroup(){
     var { user } = this.props
     const { circleName } = this.state
+    var code = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i = 0; i < 6; i++)
+      code += possible.charAt(Math.floor(Math.random() * possible.length));
     firebase.database().ref('users').child(`${user.uid}/circle/${user.uid}/${circleName}/${user.uid}`).set('Admin')
+    firebase.database().ref('circles').child(`${user.uid}/${circleName}`).set(code)
     Alert.alert("Created Circle Successfully")
     this.props.create(true)
   }
@@ -81,7 +86,7 @@ const styles = StyleSheet.create({
 
 
   const mapStateToProps = (state) => {
-    console.log("mapToState",state.authReducer)
+    // console.log("mapToState",state.authReducer)
     return {
       user: state.authReducer.user,
       userList: state.authReducer.userList,

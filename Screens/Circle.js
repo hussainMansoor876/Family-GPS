@@ -168,7 +168,7 @@ class Circle extends React.Component {
             onPress={() => this.setState({create: true})}
             title='View Circle Map' />
             <Button
-            icon={<Icon type='font-awesome' name='map-marker' color='#ffffff' />}
+            icon={<Icon type='font-awesome' name='users' color='#ffffff' />}
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green', marginTop: 10}}
             onPress={() => this.setState({group: false})}
