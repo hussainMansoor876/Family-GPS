@@ -24,10 +24,11 @@ class Circle extends React.Component {
     firebase.database().ref('users').child(user.uid).on('value',(value)=>{
       user = value.val()
       this.props.updateUser(user)
-      user['circle'] && Object.entries(user['circle']).forEach(([key,val]) => {
-        circleData.push({name: key, users: val})
-      })
     })
+    user['circle'] && Object.entries(user['circle']).forEach(([key,val]) => {
+      circleData.push({name: key, users: val})
+    })
+    this.setState({circleData: circleData})
   }
 
   createCircle(){
@@ -43,8 +44,8 @@ class Circle extends React.Component {
   render() {
     const { user } = this.props
     const { circleData } = this.state
-    console.log('user',user)
     const { create } = this.state
+    console.log('circleData',circleData)    
     return (
         <View style={styles.container}>
         {!create ? 
@@ -57,7 +58,7 @@ class Circle extends React.Component {
         />
         <ScrollView style={{marginTop: 5}}>
         {circleData.length && circleData.map((v,i) => {
-          <ListItem
+          return <ListItem
           key={i}
           // leftAvatar={{ source: { uri: l.avatar_url } }}
           title={v.name}
