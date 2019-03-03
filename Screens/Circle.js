@@ -36,12 +36,24 @@ class Circle extends React.Component {
   }
 
   createCircle(){
+    var { circleData } = this.state
+    circleData = []
     this.setState({create: false})
     let { user } = this.props
     firebase.database().ref('users').child(user.uid).on('value',(value)=>{
       user = value.val()
       this.props.updateUser(user)
     })
+    user['circle'] && Object.entries(user['circle']).forEach(([key,val]) => {
+      Object.entries(val).forEach(([k,v]) => {
+        circleData.push({id: key, users: v, name: k})
+      })
+    })
+    this.setState({circleData: circleData})
+  }
+
+  showMap(data){
+    console.log('data',data)
   }
 
 
@@ -63,6 +75,7 @@ class Circle extends React.Component {
         <ScrollView style={{marginTop: 5}}>
         {circleData.length && circleData.map((v,i) => {
           return <ListItem
+          key={i}
           Component={TouchableScale}
           friction={90} //
           tension={100} // These props are passed to the parent component (here TouchableScale)
@@ -72,14 +85,15 @@ class Circle extends React.Component {
             start: [1, 0],
             end: [0.2, 0],
           }}
-          ViewComponent={LinearGradient} // Only if no expo
           // leftAvatar={{ rounded: true, source: { uri: avatar_url } }}
           title={v.name}
           titleStyle={{ color: 'white', fontWeight: 'bold' }}
           subtitleStyle={{ color: 'white' }}
-          subtitle={v.users[user.uid] == 'Admin' ? 'Admin' : 'User'}
+          subtitle={v.users[user.uid] == 'Admin' ? 'You are Admin' : 'You are User'}
           chevronColor="white"
           chevron
+          containerStyle={{margin: 1}}
+          onPress={() => this.showMap(v)}
         />;
         })}
         <Button
