@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import firebase from './../Config/firebase';
 import CreateCircle from './CreateCircle';
+import TouchableScale from 'react-native-touchable-scale';
+import LinearGradient from 'react-native-linear-gradient';
 
 class Circle extends React.Component {
   constructor(props){
@@ -26,7 +28,9 @@ class Circle extends React.Component {
       this.props.updateUser(user)
     })
     user['circle'] && Object.entries(user['circle']).forEach(([key,val]) => {
-      circleData.push({name: key, users: val})
+      Object.entries(val).forEach(([k,v]) => {
+        circleData.push({id: key, users: v, name: k})
+      })
     })
     this.setState({circleData: circleData})
   }
@@ -45,7 +49,7 @@ class Circle extends React.Component {
     const { user } = this.props
     const { circleData } = this.state
     const { create } = this.state
-    console.log('circleData',circleData)    
+    // console.log('circleData',circleData)    
     return (
         <View style={styles.container}>
         {!create ? 
@@ -59,11 +63,24 @@ class Circle extends React.Component {
         <ScrollView style={{marginTop: 5}}>
         {circleData.length && circleData.map((v,i) => {
           return <ListItem
-          key={i}
-          // leftAvatar={{ source: { uri: l.avatar_url } }}
+          Component={TouchableScale}
+          friction={90} //
+          tension={100} // These props are passed to the parent component (here TouchableScale)
+          activeScale={0.95} //
+          linearGradientProps={{
+            colors: ['azure', 'aqua'],
+            start: [1, 0],
+            end: [0.2, 0],
+          }}
+          ViewComponent={LinearGradient} // Only if no expo
+          // leftAvatar={{ rounded: true, source: { uri: avatar_url } }}
           title={v.name}
-          // subtitle={l.subtitle}
-        />
+          titleStyle={{ color: 'white', fontWeight: 'bold' }}
+          subtitleStyle={{ color: 'white' }}
+          subtitle={v.users[user.uid] == 'Admin' ? 'Admin' : 'User'}
+          chevronColor="white"
+          chevron
+        />;
         })}
         <Button
             icon={<Icon type='font-awesome' name='users' color='#ffffff' />}

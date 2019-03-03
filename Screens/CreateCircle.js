@@ -32,7 +32,7 @@ class CreateCircle extends React.Component {
   createGroup(){
     var { user } = this.props
     const { circleName } = this.state
-    firebase.database().ref('users').child(`${user.uid}/circle/${circleName}/${user.uid}`).set('Admin')
+    firebase.database().ref('users').child(`${user.uid}/circle/${user.uid}/${circleName}/${user.uid}`).set('Admin')
     Alert.alert("Created Circle Successfully")
     this.props.create(true)
   }
