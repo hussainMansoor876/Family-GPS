@@ -20,10 +20,9 @@ class Home extends React.Component {
   async componentWillMount(){
     const { user } = this.props
     const allData = []
-    console.log('Hello')
     firebase.database().ref('users').on('child_added',(value) => {
-        console.log('value===>', value.val())
         allData.push(value.val())
+        this.props.allUser(allData)    
       })
     const check = await Location.getProviderStatusAsync()
     // console.log('check',check.gpsAvailable)
@@ -38,7 +37,6 @@ class Home extends React.Component {
       user['lng'] = location.coords.longitude
       firebase.database().ref('users').child(user.uid).set(user)
     }
-    this.props.allUser(allData)
   }
 
   async checkGPS(){
