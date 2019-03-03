@@ -6,46 +6,17 @@ import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-const list = [
-  {
-    name: 'Amy Farha',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    subtitle: 'Vice President'
-  },
-  {
-    name: 'Chris Jackson',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    subtitle: 'Vice Chairman'
-  }
-]
-
 class CreateCircle extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      received: [],
-      send: [],
-      type: 'rec'
     }
   }
 
   componentWillMount(){
-    const { user, userList } = this.props
-    const { received, send } = this.state
-    // console.log('user',user)
-    userList.map((v,i) => {
-      user['request']['received'] && Object.entries(user['request']['received']).forEach(([key,value])=>{
-        key == v.id && received.push(v)
-    })
-      user['request']['send'] && Object.entries(user['request']['send']).forEach(([key,value])=>{
-        key == v.id && send.push(v)
-    })
-    })
   }
 
   render() {
-    const { type, send, received } = this.state
-    const { user } = this.props
     return (
         <ScrollView style={{flex: 1}}>
         <Header
@@ -54,80 +25,6 @@ class CreateCircle extends React.Component {
         centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
-        <View style={styles.container}>
-        <View style={{flex: 1, flexDirection: 'row'}}>
-        <View style={{flex: 1, margin: 0.5}}>
-        <Button
-            icon={<Icon type='font-awesome' name='comments' color='#ffffff' />}
-            backgroundColor='#03A9F4'
-            buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green'}}
-            onPress={() => this.setState({type: 'rec'})}
-            title='RECEIVED' />
-        </View>
-        <View style={{flex: 1, margin: 0.5}}>
-        <Button
-            icon={<Icon type='font-awesome' name='plus' color='#ffffff' />}
-            backgroundColor='#03A9F4'
-            buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-            onPress={() => this.setState({type: 'send'})}
-            title='SEND' />
-            </View>
-        </View>
-        {type == 'rec' ? received.length ? <View style={{flex: 1}}>
-          {
-            received.map((l, i) => (
-              <View key={i} style={{flex: 1}}>
-              <ListItem
-                leftAvatar={{ source: { uri: l.avator } }}
-                title={l.name}
-                subtitle={l.email}
-              />
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <View style={{flex: 1, margin: 0.5}}>
-                <Button
-                    icon={<Icon type='font-awesome' name='check' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green'}}
-                    title='ACCEPT' />
-                </View>
-                <View style={{flex: 1, margin: 0.5}}>
-                <Button
-                    icon={<Icon type='font-awesome' name='times' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='CANCEL' />
-                    </View>
-                </View>
-              </View>
-            ))
-          }
-        </View> : <View>
-          <Text>No Received Request yet...!!</Text>
-        </View> :  send.length ? <View style={{flex: 1}}>
-          {
-            send.map((l, i) => (
-              <View key={i} style={{flex: 1}}>
-              <ListItem
-                leftAvatar={{ source: { uri: l.avator } }}
-                title={l.name}
-                subtitle={l.subtitle}
-              />
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <View style={{flex: 1, margin: 0.5}}>
-                <Button
-                    icon={<Icon type='font-awesome' name='times' color='#ffffff' />}
-                    backgroundColor='#03A9F4'
-                    buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'red'}}
-                    title='CANCEL Request' />
-                    </View>
-                </View>
-              </View>
-            ))
-          }
-        </View> : <View>
-          <Text>No Send Request yet...!!</Text>
-        </View>}
-        </View>
       </ScrollView>
     );
   }

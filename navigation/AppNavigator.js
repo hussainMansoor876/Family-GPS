@@ -10,10 +10,7 @@ const DrawerNavigator = createDrawerNavigator({
         screen: Screen.CreateCircle
     },
     Circle: {
-        screen: Screen.Services
-    },
-    Chat: {
-        screen: Screen.currentChat
+        screen: Screen.Circle
     }
 },{
     drawerWidth: 230,
