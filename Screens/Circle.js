@@ -16,7 +16,8 @@ class Circle extends React.Component {
     this.state = {
       create: false,
       group: false,
-      circleData: []
+      circleData: [],
+      data: []
     }
     this.createCircle = this.createCircle.bind(this)
   }
@@ -54,13 +55,19 @@ class Circle extends React.Component {
   }
 
   showMap(data){
-    console.log('data',data)
+    var { data } = this.state
+    data = []
+    Object.entries(data['users']).forEach(([key,val]) => {
+      console.log('key',key)
+      console.log('val',val)
+    })
+    // console.log('data',data)
   }
 
 
   render() {
     const { user } = this.props
-    const { circleData, create, group } = this.state
+    const { circleData, create, group, data } = this.state
     // console.log('circleData',circleData)    
     return (
         <View style={styles.container}>
@@ -73,7 +80,7 @@ class Circle extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <ScrollView style={{marginTop: 5}}>
-        {!group && circleData.map((v,i) => {
+        {circleData.length && !group ? circleData.map((v,i) => {
           return <ListItem
           key={i}
           Component={TouchableScale}
@@ -95,7 +102,9 @@ class Circle extends React.Component {
           containerStyle={{margin: 1}}
           onPress={() => this.showMap(v)}
         />;
-        })}
+        }) : <ScrollView style={{flex: 1}}>
+        <Text>Hello</Text>
+        </ScrollView>}
         <Button
             icon={<Icon type='font-awesome' name='users' color='#ffffff' />}
             backgroundColor='#03A9F4'
