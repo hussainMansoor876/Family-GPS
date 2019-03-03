@@ -19,7 +19,7 @@ const list = [
   }
 ]
 
-class Requests extends React.Component {
+class CreateCircle extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -160,4 +160,4 @@ const styles = StyleSheet.create({
   }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Requests)
+export default connect(mapStateToProps,mapDispatchToProps)(CreateCircle)

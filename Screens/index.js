@@ -3,14 +3,16 @@ import { StyleSheet, Text, View,Button } from 'react-native';
 import HomeScreen from './Home'
 import LoginScreen from './Login'
 import Services from './Services'
-import Requests from './Requests';
+import CreateCircle from './CreateCircle';
 import currentChat from './currentChat';
+import Map from './Map';
 
 
 export {
     HomeScreen,
     LoginScreen,
     Services,
-    Requests,
-    currentChat
+    CreateCircle,
+    currentChat,
+    Map
 }

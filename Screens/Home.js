@@ -20,7 +20,7 @@ class Home extends React.Component {
   async componentWillMount(){
     const { user } = this.props
     const check = await Location.getProviderStatusAsync()
-    console.log('check',check.gpsAvailable)
+    // console.log('check',check.gpsAvailable)
     if(!check.gpsAvailable){
       this.props.gpsChcek(false)
     }else{
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
 
 
   const mapStateToProps = (state) => {
-    console.log("mapToState",state.authReducer)
     return {
       user: state.authReducer.user,
       userList: state.authReducer.userList,
