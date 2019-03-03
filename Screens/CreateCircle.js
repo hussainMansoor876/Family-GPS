@@ -11,33 +11,34 @@ class CreateCircle extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      circleName: ''
+      circleName: '',
+      bool : false
     }
-    console.log('props',props)
+    this.createGroup = this.createGroup.bind(this)
+  }
+
+  componentWillMount(){
+    this.setState({bool: false})
   }
 
 
   changeText(text){
-    this.setState({circleName: text})
+    this.setState({
+      circleName: text,
+      bool: true
+    })
   }
 
   createGroup(){
     var { user } = this.props
     const { circleName } = this.state
-    !user['circle'] && user['circle']
-    user['circle'][circleName] = {
-      [user.uid]: 'Admin'
-    }
-    firebase.database().ref('users').child(user.uid).set(user)
-    .then(()=>{
-      Alert.alert("Created Circle Successfully")
-      this.props.updateUser(user)
-      this.props.create(true)
-    })
+    firebase.database().ref('users').child(`${user.uid}/circle/${circleName}/${user.uid}`).set('Admin')
+    Alert.alert("Created Circle Successfully")
+    this.props.create(true)
   }
 
   render() {
-    const { circleName } = this.state
+    const { circleName, bool } = this.state
     return (
         <ScrollView style={{flex: 1}}>
         <Header
@@ -56,15 +57,16 @@ class CreateCircle extends React.Component {
             color='black'
           />
         }
+        style={{marginTop: 10}}
         value={circleName}
         onChangeText = {(text) => this.changeText(text)}
       />
-      <Button
+      {bool && <Button
             icon={<Icon type='font-awesome' name='users' color='#ffffff' />}
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green', marginTop: 10}}
-            onPress={() => this.createGroup()}
-            title='CREATE CIRCLE' />
+            onPress={this.createGroup}
+            title='CREATE CIRCLE' />}
       </ScrollView>
     );
   }

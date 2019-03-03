@@ -26,7 +26,7 @@ class Circle extends React.Component {
   }
 
   createCircle(){
-    this.setState({create: true})
+    this.setState({create: false})
   }
 
 
