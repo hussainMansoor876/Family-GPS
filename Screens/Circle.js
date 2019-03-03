@@ -83,7 +83,7 @@ class Circle extends React.Component {
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
-        centerComponent={{ text: `Wellcome`, style: { color: '#fff' } }}
+        centerComponent={{ text: group ? openCircle : `Wellcome ${user.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <ScrollView style={{marginTop: 5}}>
