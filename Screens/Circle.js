@@ -87,6 +87,15 @@ class Circle extends React.Component {
     this.setState({invite: true})
   }
 
+  inviteUser(v){
+    const { openCircle } = this.state
+    const { user } = this.props
+    console.log('v',v)
+    firebase.database().ref('circles').child(`${user.uid}/${openCircle}`).on('value',(value) => {
+      console.log('console',value.val())
+    })
+  }
+
 
   render() {
     const { user } = this.props
@@ -188,7 +197,7 @@ class Circle extends React.Component {
                     icon={<Icon type='font-awesome' name='user-plus' color='#ffffff' />}
                     backgroundColor='#03A9F4'
                     buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    onPress={() => this.setState({invite: false})}
+                    onPress={() => this.inviteUser(l)}
                     title={`Invite ${l.name}`} />
                     </View>
                 </View>
