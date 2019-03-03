@@ -83,7 +83,7 @@ class Circle extends React.Component {
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
-        centerComponent={{ text: group ? openCircle : `Wellcome ${user.name}`, style: { color: '#fff' } }}
+        centerComponent={{ text: group ? `Circle ${openCircle}` : `Wellcome ${user.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <ScrollView style={{marginTop: 5}}>
@@ -141,6 +141,12 @@ class Circle extends React.Component {
               })}
               <Button
             icon={<Icon type='font-awesome' name='user-plus' color='#ffffff' />}
+            backgroundColor='#03A9F4'
+            buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green', marginTop: 10}}
+            onPress={() => this.setState({create: true})}
+            title='Invite friends' />
+            <Button
+            icon={<Icon type='font-awesome' name='map-marker-smile' color='#ffffff' />}
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green', marginTop: 10}}
             onPress={() => this.setState({create: true})}
