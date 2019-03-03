@@ -102,8 +102,8 @@ class Map extends React.Component {
 
   render() {
     let { locations, userLocation } = this.state;
-    console.log("locations", locations);
-    console.log("userLocation", userLocation);
+    // console.log("locations", locations);
+    // console.log("userLocation", userLocation);
     var latitude;
     var longitude;
 
@@ -115,8 +115,8 @@ class Map extends React.Component {
       longitude = userLocation.coords.longitude;
     }
 
-    console.log("****** LAT", latitude);
-    console.log("****** LNG", longitude);
+    // console.log("****** LAT", latitude);
+    // console.log("****** LNG", longitude);
     const { user } = this.props
     return (
       <View style={{ flex: 1 }}>

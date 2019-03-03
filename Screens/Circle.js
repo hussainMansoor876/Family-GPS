@@ -87,7 +87,7 @@ class Circle extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <ScrollView style={{marginTop: 5}}>
-        {circleData.length && !group && circleData.map((v,i) => {
+        {circleData.length && !group ? circleData.map((v,i) => {
           return <ListItem
           key={i}
           Component={TouchableScale}
@@ -109,7 +109,7 @@ class Circle extends React.Component {
           containerStyle={{margin: 1}}
           onPress={() => this.showMap(v)}
         />
-        })}
+        }) : null}
         {!group ? <Button
             icon={<Icon type='font-awesome' name='users' color='#ffffff' />}
             backgroundColor='#03A9F4'
@@ -126,7 +126,7 @@ class Circle extends React.Component {
                 linearGradientProps={{
                   colors: ['azure', 'aqua'],
                   start: [1, 0],
-                  end: [0.2, 0],
+                  end: [0.2, 0]
                 }}
                 // leftAvatar={{ rounded: true, source: { uri: avatar_url } }}
                 title={v.name}
@@ -146,11 +146,11 @@ class Circle extends React.Component {
             onPress={() => this.setState({create: true})}
             title='Invite friends' />
             <Button
-            icon={<Icon type='font-awesome' name='map-marker-smile' color='#ffffff' />}
+            icon={<Icon type='font-awesome' name='map-marker' color='#ffffff' />}
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green', marginTop: 10}}
             onPress={() => this.setState({create: true})}
-            title='Invite friends' />
+            title='View Circle Map' />
             </ScrollView>}
         </ScrollView>
         </View>
