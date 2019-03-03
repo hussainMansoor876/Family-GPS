@@ -5,19 +5,39 @@ import { updateUser, removeUser, allUser, chatUser } from '../Redux/actions/auth
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import firebase from './../Config/firebase';
 
 class CreateCircle extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      circleName: ''
     }
     console.log('props',props)
   }
 
-  componentWillMount(){
+
+  changeText(text){
+    this.setState({circleName: text})
+  }
+
+  createGroup(){
+    var { user } = this.props
+    const { circleName } = this.state
+    !user['circle'] && user['circle']
+    user['circle'][circleName] = {
+      [user.uid]: 'Admin'
+    }
+    firebase.database().ref('users').child(user.uid).set(user)
+    .then(()=>{
+      Alert.alert("Created Circle Successfully")
+      this.props.updateUser(user)
+      this.props.create(true)
+    })
   }
 
   render() {
+    const { circleName } = this.state
     return (
         <ScrollView style={{flex: 1}}>
         <Header
@@ -27,36 +47,24 @@ class CreateCircle extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <Input
-          placeholder='BASIC INPUT'
-        />
-
-        <Input
-          placeholder='INPUT WITH ICON'
-          leftIcon={{ type: 'font-awesome', name: 'chevron-left' }}
-        />
-
-        <Input
-          placeholder='INPUT WITH CUSTOM ICON'
-          leftIcon={
-            <Icon
-              name='user'
-              size={24}
-              color='black'
-            />
-          }
-        />
-
-        <Input
-          placeholder='INPUT WITH SHAKING EFFECT'
-          shake={true}
-        />
-
-        <Input
-          placeholder='INPUT WITH ERROR MESSAGE'
-          errorStyle={{ color: 'red' }}
-          errorMessage='ENTER A VALID ERROR HERE'
-        />
-
+        placeholder='INPUT your Circle Name'
+        leftIcon={
+          <Icon
+            type='font-awesome'
+            name='users'
+            size={24}
+            color='black'
+          />
+        }
+        value={circleName}
+        onChangeText = {(text) => this.changeText(text)}
+      />
+      <Button
+            icon={<Icon type='font-awesome' name='users' color='#ffffff' />}
+            backgroundColor='#03A9F4'
+            buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green', marginTop: 10}}
+            onPress={() => this.createGroup()}
+            title='CREATE CIRCLE' />
       </ScrollView>
     );
   }

@@ -46,7 +46,7 @@ class Circle extends React.Component {
         <ScrollView style={{marginTop: 5}}>
         {user['circle'] && console.log(user['circle'])}
         <Button
-            icon={<Icon type='font-awesome' name='comments' color='#ffffff' />}
+            icon={<Icon type='font-awesome' name='users' color='#ffffff' />}
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green', marginTop: 10}}
             onPress={() => this.setState({create: true})}
